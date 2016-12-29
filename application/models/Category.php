@@ -17,7 +17,7 @@ class Category extends CI_Model{
 		$this->db->join('posts p','pc.post_id=p.id');
 		$this->db->where('c.status',1);
 		$this->db->where('p.status',1);
-		$this->db->group_by('pc.category_id');
+		$this->db->group_by('c.id','pc.category_id');
 		$this->db->order_by('c.name','asc');
 		$categories = $this->db->get('posts_categories pc')->result_array();
 		return $categories;

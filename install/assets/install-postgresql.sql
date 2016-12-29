@@ -52,7 +52,7 @@ drop table users_groups;
 /* Table: assets                                                */
 /*==============================================================*/
 create table assets (
-   id 	serial 		NOT NULL,
+   id                   int                 not null,
    type                 character varying(255)         not null,
    primary_key          int                 not null,
    mime                 character varying(255)         not null,
@@ -70,7 +70,7 @@ create table assets (
 /* Table: assets_posts                                          */
 /*==============================================================*/
 create table assets_posts (
-  id 	serial 		NOT NULL,
+   id                   int                 not null,
    post_id              int                 not null,
    asset_id             int                 not null,
    constraint PK_ASSETS_POSTS primary key (id),
@@ -82,7 +82,7 @@ create table assets_posts (
 /* Table: categories                                            */
 /*==============================================================*/
 create table categories (
-   id 	serial 			NOT NULL,
+   id                   int                 not null,
    name                 character varying(255)         not null,
    slug                 character varying(255)         not null,
    status               int                 not null,
@@ -93,7 +93,7 @@ create table categories (
 /* Table: groups                                                */
 /*==============================================================*/
 create table groups (
-   id 	serial 			NOT NULL,
+   id                   int                 not null,
    name                 character varying(20)          not null,
    description          character varying(100)         not null,
    constraint PK_GROUPS primary key (id)
@@ -103,7 +103,7 @@ create table groups (
 /* Table: login_attempts                                        */
 /*==============================================================*/
 create table login_attempts (
-   id 		serial 		NOT NULL,
+   id                   int                 not null,
    ip_address           character varying(15)          not null,
    login                character varying(100)         not null,
    "time"               int                 null default NULL,
@@ -114,7 +114,7 @@ create table login_attempts (
 /* Table: menus                                                 */
 /*==============================================================*/
 create table menus (
-  id    	serial 		NOT NULL,
+   id                   int                 not null,
    name                 character varying(255)         not null,
    url                  character varying(255)         not null,
    parent_id            int                 not null default 0,
@@ -128,7 +128,7 @@ create table menus (
 /* Table: methods                                               */
 /*==============================================================*/
 create table methods (
-  id serial NOT NULL,
+   id                   int                 not null,
    name                 character varying(255)         not null,
    path                 character varying(255)         not null,
    parent_id            int                 not null default 0,
@@ -139,7 +139,7 @@ create table methods (
 /* Table: methods_groups                                        */
 /*==============================================================*/
 create table methods_groups (
-   id   serial   NOT NULL,
+   id                   int                 not null,
    method_id            int                 not null default 0,
    group_id             int                 not null default 0,
    allow_access         int                 not null default 0,
@@ -152,7 +152,7 @@ create table methods_groups (
 /* Table: posts                                                 */
 /*==============================================================*/
 create table posts (
-  id serial NOT NULL,
+   id                   int                 not null,
    title                character varying(255)         not null,
    slug                 character varying(255)         not null,
    body                 TEXT                 null,
@@ -170,7 +170,7 @@ create table posts (
 /* Table: posts_categories                                      */
 /*==============================================================*/
 create table posts_categories (
-   id serial NOT NULL,
+   id                   int                 not null,
    post_id              int                 not null,
    category_id          int                 not null,
    constraint PK_POSTS_CATEGORIES primary key (id),
@@ -182,7 +182,7 @@ create table posts_categories (
 /* Table: posts_tags                                            */
 /*==============================================================*/
 create table posts_tags (
-   id serial NOT NULL,
+   id                   int                 not null,
    post_id              int                 not null,
    tag_id               int                 not null,
    constraint PK_POSTS_TAGS primary key (id),
@@ -193,7 +193,7 @@ create table posts_tags (
 /* Table: settings                                              */
 /*==============================================================*/
 create table settings (
-   id serial NOT NULL,
+   id                   int                 not null,
    key                  character varying(255)         not null,
    value                TEXT                 not null,
    description          character varying(255)         not null,
@@ -204,7 +204,7 @@ create table settings (
 /* Table: tags                                                  */
 /*==============================================================*/
 create table tags (
-  id serial NOT NULL,
+   id                   int                 not null,
    name                 character varying(255)         not null,
    slug                 character varying(255)         not null,
    status               int                 not null,
@@ -215,7 +215,7 @@ create table tags (
 /* Table: users                                                 */
 /*==============================================================*/
 create table users (
-  id serial NOT NULL,
+   id                   int                 not null,
    ip_address           character varying(15)          not null,
    username             character varying(100)         not null,
    password             character varying(255)         not null,
@@ -239,7 +239,7 @@ create table users (
 /* Table: users_groups                                          */
 /*==============================================================*/
 create table users_groups (
-   id serial NOT NULL,
+   id                   int                 not null,
    user_id              int                 not null,
    group_id             int                 not null,
    constraint PK_USERS_GROUPS primary key (id),

@@ -31,10 +31,10 @@ class User extends CI_Model{
 	}
 
 	function find_by_id($id){
-		$this->db->select('ug.user_id, u.*, GROUP_CONCAT(g.id) AS group_ids,GROUP_CONCAT(g.name) AS groups');
+		$this->db->select("ug.user_id, u.*, string_agg(g.id::character varying,',') AS group_ids,string_agg(g.name::character varying,',') AS groups");
 		$this->db->join('groups g','ug.group_id=g.id');
 		$this->db->join('users u','ug.user_id=u.id');
-		$this->db->group_by('ug.user_id');
+		$this->db->group_by(array( 'u.id','ug.user_id'));
 		$this->db->where('u.id',$id);
 		return $this->db->get('users_groups ug')->row_array();
 	}
