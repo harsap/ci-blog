@@ -9,7 +9,7 @@
                       <div class="list-group-item">
                         <?php if(!empty($post['featured_image'])):?>
                         <div class="row-picture">
-                            <img class="circle" src="<?php echo BASE_URI.$post['featured_image']?>" alt="icon">
+                            <img class="img-responsive" src="<?php echo BASE_URI.$post['featured_image']?>" alt="icon">
                         </div>
                         <?php endif;?>
                         <div class="row-content">

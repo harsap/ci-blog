@@ -10,6 +10,7 @@
         <link href="<?php echo $base_assets_url;?>css/font-awesome.min.css" rel="stylesheet" type="text/css" />
         <!-- Theme style -->
         <link href="<?php echo $base_assets_url;?>css/AdminLTE.css" rel="stylesheet" type="text/css" />
+        <script src="<?php echo base_url(); ?>/assets/common/js/jquery/jquery-2.1.1.min.js"></script>
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -27,7 +28,7 @@
                     <?php echo message_box(validation_errors(),'danger'); ?>
                     <?php echo $this->session->flashdata('message');?>
                     <div class="form-group">
-                        <input type="text" name="identity" class="form-control" placeholder="Email"/>
+                        <input type="text" name="identity" class="form-control" placeholder="Username"/>
                     </div>
                     <div class="form-group">
                         <input type="password" name="password" class="form-control" placeholder="Password"/>
@@ -43,12 +44,11 @@
                     
                     <a href="<?php echo site_url('signup')?>" class="text-center">Create new account</a>
                 </div>
+				<input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
             <?php echo form_close();?>
         </div>
 
-
-        <!-- jQuery 2.0.2 -->
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+ 
         <!-- Bootstrap -->
         <script src="<?php echo $base_assets_url;?>js/bootstrap.min.js" type="text/javascript"></script>        
 

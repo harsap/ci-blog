@@ -49,7 +49,7 @@ class Post extends CI_Model{
 		$this->db->join('users u','p.user_id=u.id');
 		$this->db->where('p.status',1);
 		$this->db->where('c.slug',$slug);
-		$this->db->group_by('pc.post_id');
+		$this->db->group_by(array('p.id','u.username','pc.post_id'));
 		$this->db->order_by('p.published_at','desc');
 		$posts = $this->db->get('posts_categories pc',$limit,$offset)->result_array();
 		return $posts;

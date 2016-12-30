@@ -15,5 +15,6 @@ $config['ci_blog_sitename'] = 'CI Blog';
 $config['ci_blog_tagline'] = 'Simple CMS based on CodeIgniter 3.x';
 
 $config['ci_blog_admin_theme'] = 'default';
+$config['ci_blog_upload_path'] = 'E:/kerja/php/tasik/ci-blog/assets/uploads/';
 
 

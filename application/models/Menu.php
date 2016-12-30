@@ -85,6 +85,12 @@ class Menu extends CI_Model {
             return $query->row_array();
         }
     }
+	
+	function findMaxPosition( ) {
+		$sql = ' SELECT max("position")+1 as max_menu  FROM menus ';
+         $query = $this->db->query($sql);
+        return $query->row()->max_menu;
+    }
 
     public function create($data = array()) {
 

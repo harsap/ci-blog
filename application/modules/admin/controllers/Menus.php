@@ -38,7 +38,8 @@ class Menus extends MY_Controller {
                 'name' => $this->input->post('name'),
                 'url' => $this->input->post('url'),
                 'parent_id' => $parent_id,
-                'status' => $this->input->post('status')
+                'status' => $this->input->post('status'),
+				"position" => $this->Menu->findMaxPosition( )
             );
             $this->Menu->create($data);
             $menu_id = $this->db->insert_id();

@@ -1,52 +1,53 @@
 <?php
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Assets extends MY_Controller {
 
-	public function __construct(){
-		parent::__construct();
-		$this->load->model('Asset');
-	}
+    public function __construct() {
+        parent::__construct();
+        $this->load->model('Asset');
+    }
 
-	public function browse(){
-		if($this->session->userdata('user_id')){
-	        $page = 1;
-	        if(!empty($_GET['page'])){
-	            $page = (int) $_GET['page'];
-	        }
-	      
-	        $limit = 8;
-			
-			$this->data['assets'] = $this->db->order_by('created','desc')->get('assets',$limit,$page-1)->result_array();
-			$this->data['total_pages'] = ceil($this->db->get('assets')->num_rows() / $limit);
-			$this->data['current_page'] = $page;
+    public function browse() {
+        if ($this->session->userdata('user_id')) {
+            $page = 1;
+            if (!empty($_GET['page'])) {
+                $page = (int) $_GET['page'];
+            }
 
-			$this->load_admin('assets/browse', false);
-		}
-	}
+            $limit = 8;
 
-	public function browse_assets(){
-		if($this->session->userdata('user_id')){
-	        $page = 1;
-	        if(!empty($_GET['page'])){
-	            $page = (int) $_GET['page'];
-	        }
-	      
-	        $limit = 8;
-			
-			$this->data['assets'] = $this->db->order_by('created','desc')->get('assets',$limit,$page-1)->result_array();
-			$this->data['total_pages'] = ceil($this->db->get('assets')->num_rows() / $limit);
-			$this->data['current_page'] = $page;
+            $this->data['assets'] = $this->db->order_by('created', 'desc')->get('assets', $limit, $page - 1)->result_array();
+            $this->data['total_pages'] = ceil($this->db->get('assets')->num_rows() / $limit);
+            $this->data['current_page'] = $page;
 
-			$this->load_admin('assets/browse_assets',false);
-		}
-	}
+            $this->load_admin('assets/browse', false);
+        }
+    }
 
-	public function upload(){
-		if (!$this->input->is_ajax_request()) {
-			exit('No direct script access allowed');
-		}else{
-			if ($_FILES['file']['error'] != 4) {
+    public function browse_assets() {
+        if ($this->session->userdata('user_id')) {
+            $page = 1;
+            if (!empty($_GET['page'])) {
+                $page = (int) $_GET['page'];
+            }
+
+            $limit = 8;
+
+            $this->data['assets'] = $this->db->order_by('created', 'desc')->get('assets', $limit, $page - 1)->result_array();
+            $this->data['total_pages'] = ceil($this->db->get('assets')->num_rows() / $limit);
+            $this->data['current_page'] = $page;
+
+            $this->load_admin('assets/browse_assets', false);
+        }
+    }
+
+    public function upload() {
+        if (!$this->input->is_ajax_request()) {
+            exit('No direct script access allowed');
+        } else {
+            if ($_FILES['file']['error'] != 4) {
                 if ($this->general->isExistFile($this->assets_path . $_FILES['file']['name'])) {
                     unlink($this->assets_path . $_FILES['file']['name']);
                 }
@@ -55,13 +56,9 @@ class Assets extends MY_Controller {
                 $config['max_size'] = $this->Setting->findByKey('image_max_size');
 
 
-                $this->load->library('upload', $config);
-
-
-                if ($this->upload->do_upload("file")) {
-                    $image = $this->upload->data();
-                    // print_data($image);exit;
-
+                $this->load->library('upload', $config); 
+                if ($this->upload->do_upload("file")) { 
+                    $image = $this->upload->data(); 
                     $url = $this->assets_path . $image['orig_name'];
                     // if (($image['image_width'] > $this->Image->maxWidth) || ($image['image_height'] > $this->Image->maxHeight)) {
                     //     $this->load->library('SimpleImage');
@@ -70,19 +67,20 @@ class Assets extends MY_Controller {
                     //     $this->simpleimage->resizeToHeight($this->Image->maxHeight);
                     //     $this->simpleimage->save($url);
                     // }
-                    
-                    $asset = array(
-                    	'type' => 'post',
-                    	'mime' => $image['file_type'],
-                    	'extension' => $image['file_ext'],
-                    	'size' => $image['file_size'],
-                    	'description' => $image['raw_name'],
-                    	'path' => $url,
-                    	'user_id' => $this->session->userdata('user_id'),
-                    	'created' => date("Y-m-d H:i:s"),
-                    	'modified' => date("Y-m-d H:i:s")
-                    );
 
+                    $asset = array(
+                        'type' => 'post',
+                        'mime' => $image['file_type'],
+                        "primary_key"=>0,
+                        'extension' => $image['file_ext'],
+                        'size' => $image['file_size'],
+                        'description' => $image['raw_name'],
+                        'path' => $url,
+                        'user_id' => $this->session->userdata('user_id'),
+                        'created' => date("Y-m-d H:i:s"),
+                        'modified' => date("Y-m-d H:i:s")
+                    );
+                    //print_data($asset);
                     $this->Asset->create($asset);
 
                     $data = array(
@@ -90,76 +88,77 @@ class Assets extends MY_Controller {
                         'name' => $image["raw_name"]
                     );
                     die(json_encode($data));
-                }else{
-                	$errors = $this->upload->display_errors();
-                	die($errors);
+                } else { 
+                    $errors = $this->upload->display_errors();  
+                    die($errors);
                 }
             }
-		}
-		exit;
-	}
+        }
+        exit;
+    }
 
-	public function index(){
-		
-		$config['base_url'] = site_url('admin/categories/index/');
-		$config['total_rows'] = count($this->Category->find());
-		$config['per_page'] = 10;
-		$config["uri_segment"] = 4;
-		
-		$this->data['categories'] = $this->Category->find($config['per_page'], $this->uri->segment(4));
+    public function index() {
 
-		$this->data['pagination'] = $this->bootstrap_pagination($config);
-		$this->render('admin/categories/index');
-	}
+        $config['base_url'] = site_url('admin/categories/index/');
+        $config['total_rows'] = count($this->Category->find());
+        $config['per_page'] = 10;
+        $config["uri_segment"] = 4;
 
-	public function add(){
-		$this->form_validation->set_rules('name', 'name', 'required|is_unique[categories.name]');
-		$this->form_validation->set_rules('status', 'status', 'required');
+        $this->data['categories'] = $this->Category->find($config['per_page'], $this->uri->segment(4));
 
-		if($this->form_validation->run() == true){
-			$category = array(
-				'name' => $this->input->post('name'),
-				'status' => $this->input->post('status')
-			);
-			$this->Category->create($category);
-			$this->session->set_flashdata('message',message_box('Category has been saved','success'));
-			redirect('admin/categories/index');
-		}
+        $this->data['pagination'] = $this->bootstrap_pagination($config);
+        $this->render('admin/categories/index');
+    }
 
-		$this->render('admin/categories/add');
-	}
+    public function add() {
+        $this->form_validation->set_rules('name', 'name', 'required|is_unique[categories.name]');
+        $this->form_validation->set_rules('status', 'status', 'required');
 
-	public function edit($id = null){
-		if($id == null){
-			$id = $this->input->post('id');
-		}
+        if ($this->form_validation->run() == true) {
+            $category = array(
+                'name' => $this->input->post('name'),
+                'status' => $this->input->post('status')
+            );
+            $this->Category->create($category);
+            $this->session->set_flashdata('message', message_box('Category has been saved', 'success'));
+            redirect('admin/categories/index');
+        }
 
-		$this->form_validation->set_rules('name', 'name', 'required');
-		$this->form_validation->set_rules('status', 'status', 'required');
+        $this->render('admin/categories/add');
+    }
 
-		if($this->form_validation->run() == true){
-			$category = array(
-				'name' => $this->input->post('name'),
-				'status' => $this->input->post('status')
-			);
-			$this->Category->update($category, $id);
-			$this->session->set_flashdata('message',message_box('Category has been saved','success'));
-			redirect('admin/categories/index');
-		}
+    public function edit($id = null) {
+        if ($id == null) {
+            $id = $this->input->post('id');
+        }
 
-		$this->data['category'] = $this->Category->find_by_id($id);
+        $this->form_validation->set_rules('name', 'name', 'required');
+        $this->form_validation->set_rules('status', 'status', 'required');
 
-		$this->render('admin/categories/edit');
-	}
+        if ($this->form_validation->run() == true) {
+            $category = array(
+                'name' => $this->input->post('name'),
+                'status' => $this->input->post('status')
+            );
+            $this->Category->update($category, $id);
+            $this->session->set_flashdata('message', message_box('Category has been saved', 'success'));
+            redirect('admin/categories/index');
+        }
 
-	public function delete($id = null){
-		if(!empty($id)){
-			$this->Category->delete($id);
-			$this->session->set_flashdata('message',message_box('Category has been deleted','success'));
-			redirect('admin/categories/index');
-		}else{
-			$this->session->set_flashdata('message',message_box('Invalid id','danger'));
-			redirect('admin/categories/index');
-		}
-	}
+        $this->data['category'] = $this->Category->find_by_id($id);
+
+        $this->render('admin/categories/edit');
+    }
+
+    public function delete($id = null) {
+        if (!empty($id)) {
+            $this->Category->delete($id);
+            $this->session->set_flashdata('message', message_box('Category has been deleted', 'success'));
+            redirect('admin/categories/index');
+        } else {
+            $this->session->set_flashdata('message', message_box('Invalid id', 'danger'));
+            redirect('admin/categories/index');
+        }
+    }
+
 }
