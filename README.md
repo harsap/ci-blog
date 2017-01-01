@@ -1,10 +1,16 @@
-# ci-blog-pgsql
+# Website kota
 
 Fork dari ci-blog - Basic CMS based on CodeIgniter 3.x
 
 Database : postgresql 9.5 atau yang lebih baru
 
 COdeigniter 3.1.2
+
+csrf enable
+
+default themes patternfly
+
+tanpa installer
  
 # Installation
 
@@ -21,9 +27,7 @@ COdeigniter 3.1.2
 
 Sampel Accounts:
 
-admin => username : admin@admin.com password:password
-
-members => username : members@website.com password:12345678
+admin => username : administrator password:password 
 
 
 # Credits:
@@ -34,6 +38,4 @@ http://codeigniter.com
 
 http://getbootstrap.com
 
-http://wowbootstrap.com
-
-https://github.com/mikecrittenden/codeigniter-installer
+http://patternfly.org 
