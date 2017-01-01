@@ -32,6 +32,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
         <link href="<?php echo $base_assets_url; ?>main/css/style1.css"
               rel="stylesheet" media="screen, print">
+         <script src="<?php echo base_url(); ?>assets/common/js/jquery/jquery-2.1.1.min.js"></script> 
+        <script src="<?php echo base_url(); ?>assets/common/js/jquery/jquery.matchHeight-min.js"></script> 
     </head>
     <body class="cards-pf">
         <div id="wrapper">
@@ -50,8 +52,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
             <?php echo $footer; ?> 
         </div> 
-        <script src="<?php echo base_url(); ?>assets/common/js/jquery/jquery-2.1.1.min.js"></script> 
-        <script src="<?php echo base_url(); ?>assets/common/js/jquery/jquery.matchHeight-min.js"></script>  
+        
 
         <?php if (!empty($home_page)): ?>
             <script type="text/javascript">

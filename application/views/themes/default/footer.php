@@ -1,4 +1,4 @@
-<footer class="fixed footer-pf navbar-fixed-bottom">
+<footer class="footer-pf">
     <div class="row">
         <div class="col-md-9">
             <p>
