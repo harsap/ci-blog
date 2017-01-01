@@ -48,8 +48,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div>
                 </div>      
             </div>
-            <?php echo $footer; ?>
-
+            <?php echo $footer; ?> 
         </div> 
         <script src="<?php echo base_url(); ?>assets/common/js/jquery/jquery-2.1.1.min.js"></script> 
         <script src="<?php echo base_url(); ?>assets/common/js/jquery/jquery.matchHeight-min.js"></script>  
